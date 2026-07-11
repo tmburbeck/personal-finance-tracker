@@ -1,0 +1,14 @@
+date,amount,category,description
+11-07-2026,50.89,Expense,boots
+09-09-2024,50.57,Income,dinner
+10-09-2024,40.23,Expense,supplies
+15-01-2025,89.99,Expense,groceries
+22-02-2025,1200.00,Income,paycheck
+03-03-2025,45.50,Expense,gas
+18-03-2025,15.75,Expense,coffee
+01-04-2025,1200.00,Income,paycheck
+12-04-2025,300.00,Expense,rent
+25-05-2025,60.20,Expense,utilities
+09-06-2025,150.00,Income,freelance
+30-06-2025,25.99,Expense,streaming subscriptions
+14-07-2025,75.40,Expense,car maintenance
