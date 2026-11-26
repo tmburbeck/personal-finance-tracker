@@ -8,6 +8,13 @@ The dashboard has four parts:
 """
 
 import math
+import os
+import subprocess
+import sys
+
+import matplotlib
+
+matplotlib.use("Agg")  # draw straight to an image file; no on-screen window needed
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -30,8 +37,34 @@ BACKGROUND = "#ffffff"
 TOP_EXPENSES = 7
 
 
-def show_dashboard(transactions, save_to=None):
-    """Opens the dashboard in a window, or saves it as an image if `save_to` is a file path."""
+DASHBOARD_FILE = "dashboard.png"
+
+
+def show_dashboard(transactions):
+    """Saves the dashboard as dashboard.png and opens it in the computer's image viewer."""
+    path = os.path.abspath(DASHBOARD_FILE)
+    save_dashboard(transactions, path)
+    print(f"Dashboard saved to {path}")
+
+    try:
+        open_file(path)
+        print("Opening it in your image viewer...")
+    except OSError:
+        print("Open that file to see the dashboard.")
+
+
+def open_file(path):
+    """Opens a file with whatever program the computer normally uses for it."""
+    if sys.platform == "win32":
+        os.startfile(path)  # Windows
+    elif sys.platform == "darwin":
+        subprocess.run(["open", path], check=True)  # macOS
+    else:
+        subprocess.run(["xdg-open", path], check=True)  # Linux
+
+
+def save_dashboard(transactions, path):
+    """Draws the dashboard and saves it as an image at `path`."""
     fig = plt.figure(figsize=(13, 9), facecolor=BACKGROUND)
     layout = fig.add_gridspec(3, 2, height_ratios=[0.5, 1.2, 1.2], hspace=0.6, wspace=0.4)
 
@@ -45,12 +78,8 @@ def show_dashboard(transactions, save_to=None):
     draw_running_balance(fig.add_subplot(layout[2, 0]), transactions)
     draw_top_expenses(fig.add_subplot(layout[2, 1]), transactions)
 
-    if save_to:
-        fig.savefig(save_to, dpi=150, bbox_inches="tight", facecolor=BACKGROUND)
-        plt.close(fig)
-        print(f"Dashboard saved to {save_to}")
-    else:
-        plt.show()
+    fig.savefig(path, dpi=150, bbox_inches="tight", facecolor=BACKGROUND)
+    plt.close(fig)
 
 
 # ---- The four parts -----------------------------------------------------------
