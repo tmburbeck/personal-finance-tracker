@@ -48,7 +48,7 @@ def view():
     print(f"  Total expenses: ${expenses:,.2f}")
     print(f"  Net savings:    ${income - expenses:,.2f}")
 
-    if input("\nShow the dashboard chart? (y/n): ").strip().lower() == "y":
+    if input("\nOpen the dashboard chart? (y/n): ").strip().lower() == "y":
         show_dashboard(transactions)
 
 
